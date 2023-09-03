@@ -1,15 +1,17 @@
-class GridLines{
+class SquareGrid extends Grid{
     constructor(){
+        super()
         
+        var n = global.gridSize
         this.vlines = []
-        for( var ix = 0 ; ix <= global.gridSize ; ix++ ){
-            var x = ix/global.gridSize
+        for( var ix = 0 ; ix <= n ; ix++ ){
+            var x = ix/n
             this.vlines.push( [v(x,0),v(x,1)] )
         }
         
         this.hlines = []
-        for( var iy = 0 ; iy <= global.gridSize ; iy++ ){
-            var y = iy/global.gridSize
+        for( var iy = 0 ; iy <= n ; iy++ ){
+            var y = iy/n
             this.hlines.push( [v(0,y),v(1,y)] )
         }
     }

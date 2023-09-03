@@ -2,6 +2,7 @@
 var pi = Math.PI
 var pio2 = Math.PI/2
 var twopi = 2*Math.PI
+var sqrt2 = Math.sqrt(2)
 function v(){return new Vector(...arguments)}
 function vp(){return Vector.polar(...arguments)}
 

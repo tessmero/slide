@@ -35,7 +35,7 @@ function init() {
     global.ctx = cvs.getContext("2d");
     
     // init grid shape
-    global.gridlines = new GridLines()
+    global.gridlines = new CircleGrid()
     
     // init grid tiles
     global.grid = []
