@@ -18,17 +18,29 @@ const global = {
     screenCorners: null, 
     
     // tile grid
-    gridSize: 10,
-    gridlines: null,
-    grid: null,
+    gridSize: 20,
+    sgridlines: null, // square grid shape
+    cgridlines: null, // circular grid shape
+    gridyOffset: 0,
+    gridyOffsetSpeed: 1e-3, // tiles per ms
+    grid: null, // grid index-color arrangement
+    
+    //
+    rds: 0,
+    targetRds: 0,
+    rdst: 0,
+    rdsTransitionDuration: 2000,
     
     //
     moveList: null,
     moveIndex: 0,
+    moveDuration: 500, // ms per tile
+    moveDelay: 2000, // ms between moves
+    moveCountdown: 2000,
     
     // 
     autoResetCountdown: 0,
-    autoResetDelay: 1000,
+    autoResetDelay: 5000,
     
     // mouse
     canvasMousePos: v(0,0),     //pixels

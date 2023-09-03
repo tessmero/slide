@@ -35,7 +35,8 @@ function init() {
     global.ctx = cvs.getContext("2d");
     
     // init grid shape
-    global.gridlines = new CircleGrid()
+    global.sgridlines = new SquareGrid()
+    global.cgridlines = new CircleGrid()
     
     // init grid tiles
     global.grid = []
@@ -60,7 +61,7 @@ function resetGame(){
     // create random movement plan
     global.moveList = []
     var vert = rand() > .5
-    for ( var i = 0 ; i < 10 ; i++ ){
+    for ( var i = 0 ; i < 6 ; i++ ){
         vert = !vert
         var offsets = []
         var mo = -global.gridSize
@@ -69,7 +70,7 @@ function resetGame(){
             if( Math.abs(o) > mo ) mo = Math.abs(o)
             offsets.push( o )
         }
-        var duration = mo*100
+        var duration = mo*global.moveDuration
         global.moveList.push(new Move(vert,duration,offsets))
     }
     

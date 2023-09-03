@@ -5,29 +5,45 @@ class Tile{
         this.color = color
     }
     
-    _draw(g,ix,iy){
+    // used in _draw()
+    _getVerts(gl,ix,iy){
         
         // locate 4 tangent gridlines
-        var tline = global.gridlines.getHLine(iy)
-        var bline = global.gridlines.getHLine(iy+1)
-        var lline = global.gridlines.getVLine(ix)
-        var rline = global.gridlines.getVLine(ix+1)
+        var tline = gl.getHLine(iy)
+        var bline = gl.getHLine(iy+1)
+        var lline = gl.getVLine(ix)
+        var rline = gl.getVLine(ix+1)
         
         // compute intersections
-        var tr = global.gridlines.getInt(tline,rline)
-        var br = global.gridlines.getInt(bline,rline)
-        var bl = global.gridlines.getInt(bline,lline)
-        var tl = global.gridlines.getInt(tline,lline)
+        var tr = gl.getInt(tline,rline)
+        var br = gl.getInt(bline,rline)
+        var bl = gl.getInt(bline,lline)
+        var tl = gl.getInt(tline,lline)
+        
+        return [tr,br,bl,tl]
+    }
+    
+    // used in draw()
+    _draw(g,ix,iy){
+        
+        // compute weighted average of two grid positions
+        var sverts = this._getVerts(global.sgridlines,ix,iy) //square grid
+        var cverts = this._getVerts(global.cgridlines,ix,iy) //circle grid
+        var verts = []
+        for( var i = 0 ; i < 4 ; i++ ){
+            verts.push( va( sverts[i], cverts[i], global.rds ) )
+        }
+        
         
         // fill quad formed by intersection points
         g.fillStyle = this.color
         g.strokeStyle = this.color
         g.lineWidth = .002
         g.beginPath()
-        g.moveTo( ...tr.xy() )
-        g.lineTo( ...br.xy() )
-        g.lineTo( ...bl.xy() )
-        g.lineTo( ...tl.xy() )
+        g.moveTo( ...verts[0].xy() )
+        g.lineTo( ...verts[1].xy() )
+        g.lineTo( ...verts[2].xy() )
+        g.lineTo( ...verts[3].xy() )
         g.closePath()
         g.fill()
 
@@ -42,13 +58,21 @@ class Tile{
     
     draw(g){
         
+        var ix = this.ix
+        var iy = (this.iy+global.gridyOffset) % global.gridSize
+        
+        
         // draw this tile
-        this._draw(g,this.ix,this.iy)
+        this._draw(g,ix,iy)
         
         // if this tile is partially off-screen, 
         // draw this tile again at the opposite end of the screen
-        if( this.ix>(global.gridSize-1) ) this._draw(g,this.ix-global.gridSize,this.iy)
-        if( this.iy>(global.gridSize-1) ) this._draw(g,this.ix,this.iy-global.gridSize)
-        
+        if( (ix>(global.gridSize-1)) && (iy>(global.gridSize-1) ) ){
+            this._draw(g,ix-global.gridSize,iy-global.gridSize)
+        }if( ix>(global.gridSize-1) ){ 
+            this._draw(g,ix-global.gridSize,iy)
+        }if( iy>(global.gridSize-1) ){ 
+            this._draw(g,ix,iy-global.gridSize)
+        }
     }
 }
