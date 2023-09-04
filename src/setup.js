@@ -34,7 +34,20 @@ function init() {
     global.canvas = cvs
     global.ctx = cvs.getContext("2d");
     
+    // 
+    resetGame()
+    
+    //
+    requestAnimationFrame(gameLoop);
+}
+
+function resetGame(){
+    resetRand(hard = true)
+    
+    
+    
     // init grid shape
+    global.gridSize = Math.floor(randRange(...global.gridSizeRange))
     global.sgridlines = new SquareGrid()
     global.cgridlines = new CircleGrid()
     
@@ -47,16 +60,6 @@ function init() {
             global.grid.push( new Tile(x,y,'white') )
         }
     } 
-    
-    // 
-    resetGame()
-    
-    //
-    requestAnimationFrame(gameLoop);
-}
-
-function resetGame(){
-    resetRand(hard = true)
     
     // create random movement plan
     global.moveList = []
@@ -88,10 +91,11 @@ function resetGame(){
         global.moveList[i].init()
         global.moveList[i].finish()
     }
+    var p = getRandomPalette()
     global.grid.forEach(tile => {
         var bx = (tile.ix<global.gridSize/2)
         var by = (tile.iy<global.gridSize/2)
-        var c = bx ? (by ? 'red' : 'blue') : (by ? "green" : "yellow")
+        var c = bx ? (by ? p[0] : p[1] ) : (by ? p[2] : p[3] )
         tile.color = c
     })
     

@@ -26,12 +26,21 @@ class Tile{
     // used in draw()
     _draw(g,ix,iy){
         
-        // compute weighted average of two grid positions
-        var sverts = this._getVerts(global.sgridlines,ix,iy) //square grid
-        var cverts = this._getVerts(global.cgridlines,ix,iy) //circle grid
-        var verts = []
-        for( var i = 0 ; i < 4 ; i++ ){
-            verts.push( va( sverts[i], cverts[i], global.rds ) )
+        // compute positions of this tile's vertices
+        if( global.rds <= 0 ){
+            var verts = this._getVerts(global.sgridlines,ix,iy) //square grid
+            
+        } else if( global.rds >= 1 ){
+            var verts = this._getVerts(global.cgridlines,ix,iy) //circle grid
+            
+        } else {
+            // compute weighted average of two grid positions
+            var sverts = this._getVerts(global.sgridlines,ix,iy) //square grid
+            var cverts = this._getVerts(global.cgridlines,ix,iy) //circle grid
+            var verts = []
+            for( var i = 0 ; i < 4 ; i++ ){
+                verts.push( va( sverts[i], cverts[i], global.rds ) )
+            }
         }
         
         

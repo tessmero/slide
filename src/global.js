@@ -18,7 +18,8 @@ const global = {
     screenCorners: null, 
     
     // tile grid
-    gridSize: 20,
+    gridSizeRange: [12,20],
+    gridSize: 15,
     sgridlines: null, // square grid shape
     cgridlines: null, // circular grid shape
     gridyOffset: 0,
