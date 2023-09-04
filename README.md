@@ -1,10 +1,10 @@
-3D cube projection on 2d canvas context, with lighting effect using procedural dot pattern.
+Sliding grid animation where each row/column is treated as a loop. The grid deterministacally solves itself like a rubik's cube.
 
-click and drag to spin the cube
+Also animated transition between square grid and radial grid
 
 ## Demo
 
-https://tessmero.github.io/cube.html
+https://tessmero.github.io/slide.html
 
 ## Usage
 
